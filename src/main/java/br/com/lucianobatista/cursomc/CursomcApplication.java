@@ -13,6 +13,7 @@ import br.com.lucianobatista.cursomc.domain.Cidade;
 import br.com.lucianobatista.cursomc.domain.Cliente;
 import br.com.lucianobatista.cursomc.domain.Endereco;
 import br.com.lucianobatista.cursomc.domain.Estado;
+import br.com.lucianobatista.cursomc.domain.ItemPedido;
 import br.com.lucianobatista.cursomc.domain.Pagamento;
 import br.com.lucianobatista.cursomc.domain.PagamentoComBoleto;
 import br.com.lucianobatista.cursomc.domain.PagamentoComCartao;
@@ -25,6 +26,7 @@ import br.com.lucianobatista.cursomc.repository.CidadeRepository;
 import br.com.lucianobatista.cursomc.repository.ClienteRepository;
 import br.com.lucianobatista.cursomc.repository.EnderecoRepository;
 import br.com.lucianobatista.cursomc.repository.EstadoRepository;
+import br.com.lucianobatista.cursomc.repository.ItemPedidoRepository;
 import br.com.lucianobatista.cursomc.repository.PagamentoRepository;
 import br.com.lucianobatista.cursomc.repository.PedidoRepository;
 import br.com.lucianobatista.cursomc.repository.ProdutoRepository;
@@ -55,6 +57,9 @@ public class CursomcApplication implements CommandLineRunner{
 	
 	@Autowired
 	PagamentoRepository pagamentoRepository;
+	
+	@Autowired
+	ItemPedidoRepository itemPedidoRepository;
 	
 	
 	public static void main(String[] args) {
@@ -121,6 +126,19 @@ public class CursomcApplication implements CommandLineRunner{
 		
 		pedidoRepository.saveAll(Arrays.asList(ped1, ped2));
 		pagamentoRepository.saveAll(Arrays.asList(pagto1, pagto2));
+		
+		ItemPedido ip1 = new ItemPedido(ped1, p1, 0.00, 1, 2000.00);
+		ItemPedido ip2 = new ItemPedido(ped1, p3, 0.00, 2, 80.00 );
+		ItemPedido ip3 = new ItemPedido(ped2, p2, 100.00, 1, 800.00);
+		
+		ped1.getItens().addAll(Arrays.asList(ip1, ip2));
+		ped2.getItens().addAll(Arrays.asList(ip3));
+		
+		p1.getItens().addAll(Arrays.asList(ip1));
+		p2.getItens().addAll(Arrays.asList(ip3));
+		p3.getItens().addAll(Arrays.asList(ip2));
+		
+		itemPedidoRepository.saveAll(Arrays.asList(ip1, ip2, ip3));
 		
 	}
 
