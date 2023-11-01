@@ -1,0 +1,2324 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Service Activation And Configuration v1",
+    "description": "Com base nos parâmetros passados, a API irá atualizar o status dos atributos de uma linha de requisição de concretização (Fulfilment Request Line).",
+    "termsOfService": "https://www.telefonica.es/es/",
+    "version": "1.2.15"
+  },
+  "servers": [
+    {
+      "url": "https://servicedomain.api.redecorp.br/serviceActivationAndConfiguration/v1"
+    }
+  ],
+  "paths": {
+    "/service": {
+      "post": {
+        "tags": [
+          "Service"
+        ],
+        "summary": "service",
+        "operationId": "service",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "application/json"
+              ]
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ServiceRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServiceResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServiceResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServiceResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServiceResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServiceResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServiceResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Server Unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServiceResponse"
+                }
+              }
+            }
+          },
+          "504": {
+            "description": "Gateway Timeout",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServiceResponse"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "x-codegen-request-body-name": "body"
+      },
+      "patch": {
+        "tags": [
+          "Service"
+        ],
+        "summary": "service",
+        "operationId": "update service status",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Autenticação básica (string, obrigatório) Contém as credenciais para autenticar no Gateway.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ArrayOfServiceUpdateRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Sucess",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServiceResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Method Not allowed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "x-codegen-request-body-name": "request"
+      }
+    },
+    "/service/{id}": {
+      "get": {
+        "tags": [
+          "Service"
+        ],
+        "summary": "Retorna informações de um Service pelo ID do serviço ou ID externo",
+        "description": "Essa operação retorna uma entidade de serviço, onde retorna informações de um Service pelo ID do serviço ou ID externo.",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Autenticação básica (string, obrigatório) Contém as credenciais para autenticar no Gateway.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identificador do serviço. Ex. MSISDN ou ExternalID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "description": "Descritivo sobre o identificador do serviço. Enviar \"MSISDN\" ou \"ExternalID\", caso não enviado o valor \"MSISDN\" será contemplado.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetService"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Method Not allowed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/service/callback": {
+      "post": {
+        "tags": [
+          "Service Callback"
+        ],
+        "summary": "serviceCallback",
+        "operationId": "serviceCallback",
+        "parameters": [
+          {
+            "name": "X-Api-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-client-key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ServiceCallbackRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServiceCallbackResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "x-codegen-request-body-name": "body"
+      }
+    },
+    "/registryInterception/{id}": {
+      "patch": {
+        "tags": [
+          "Registry Interception"
+        ],
+        "operationId": "registryInterception",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Autenticação básica (string, obrigatório) Contém as credenciais para autenticar no Gateway.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "MSISDN 11 dígitos.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegistryInterception"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": {
+            "description": "Accepted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Empty"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Method Not allowed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "x-codegen-request-body-name": "request"
+      }
+    },
+    "/service/suspension": {
+      "patch": {
+        "tags": [
+          "Service"
+        ],
+        "summary": "suspensão de linha por falta de cadastro",
+        "operationId": "suspension service status",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Autenticação básica (string, obrigatório) Contém as credenciais para autenticar no Gateway.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ArrayOfServiceSuspensionRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "No content",
+            "content": {}
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Method Not allowed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "x-codegen-request-body-name": "request"
+      }
+    },
+    "/serviceConfiguration": {
+      "post": {
+        "tags": [
+          "Service"
+        ],
+        "summary": "Iniciar fluxo de configuração do vivo play (configureResources)",
+        "operationId": "serviceConfiguration",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Autenticação básica (string, obrigatório) Contém as credenciais para autenticar no Gateway.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ArrayOfServiceUpdateRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "No content",
+            "content": {}
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Method Not allowed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "x-codegen-request-body-name": "request"
+      }
+    },
+    "/service5G": {
+      "post": {
+        "tags": [
+          "service5G"
+        ],
+        "summary": "Ativação do 5G para as linhas enviadas pelo Device Manager",
+        "description": "Esta operação ativa o serviço 5G para as linhas enviadas pelo Device Manager.",
+        "operationId": "service5G",
+        "requestBody": {
+          "description": "informações da linha para ativação",
+          "content": {
+            "application/soap+xml;charset=utf-8": {
+              "schema": {
+                "$ref": "#/components/schemas/Product"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/soap+xml;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseNotification"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/soap+xml;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseNotification"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/soap+xml;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseNotification"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/soap+xml;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseNotification"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/soap+xml;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseNotification"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Error",
+            "content": {
+              "application/soap+xml;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseNotification"
+                }
+              }
+            }
+          }
+        },
+        "x-codegen-request-body-name": "Product"
+      }
+    },
+    "/ESimDownloadOrder": {
+      "post": {
+        "tags": [
+          "ESIM"
+        ],
+        "summary": "Reserva ICCID para ativação de ESIM no ESIM Manager",
+        "operationId": "ESimDownloadOrder",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "functionRequesterIdentifier",
+            "in": "header",
+            "description": "VBRLABid = Pré-Prod / VBRid = Producao",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ESIMRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ESIMResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorESIMManager"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorESIMManager"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorESIMManager"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorESIMManager"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorESIMManager"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Server Unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorESIMManager"
+                }
+              }
+            }
+          },
+          "504": {
+            "description": "Gateway Timeout",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorESIMManager"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "x-codegen-request-body-name": "body"
+      }
+    },
+    "/ESimConfirmOrder": {
+      "post": {
+        "tags": [
+          "ESIM"
+        ],
+        "summary": "Confirma a ativação do ESIM",
+        "operationId": "ESimConfirmOrder",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "functionRequesterIdentifier",
+            "in": "header",
+            "description": "VBRLABid = Pré-Prod / VBRid = Producao",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ESIMRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ESIMResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorESIMManager"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorESIMManager"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorESIMManager"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorESIMManager"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorESIMManager"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Server Unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorESIMManager"
+                }
+              }
+            }
+          },
+          "504": {
+            "description": "Gateway Timeout",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorESIMManager"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "x-codegen-request-body-name": "body"
+      }
+    },
+    "/ESimCancelOrder": {
+      "post": {
+        "tags": [
+          "ESIM"
+        ],
+        "summary": "Cancela a ativação do ESIM e libera o ICCID reservado na operação downloadOrder",
+        "operationId": "ESimCancelOrder",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "functionRequesterIdentifier",
+            "in": "header",
+            "description": "VBRLABid = Pré-Prod / VBRid = Producao",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ESIMRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ESIMResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorESIMManager"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorESIMManager"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorESIMManager"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorESIMManager"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorESIMManager"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Server Unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorESIMManager"
+                }
+              }
+            }
+          },
+          "504": {
+            "description": "Gateway Timeout",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorESIMManager"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "x-codegen-request-body-name": "body"
+      }
+    },
+    "/transferESimService": {
+      "post": {
+        "tags": [
+          "ESIM"
+        ],
+        "summary": "executa a criação de ordens no CRM da linha para efetuar uma ativação de ESIM",
+        "operationId": "transferESimService",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TransferESimRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransferESimResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Server Unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "504": {
+            "description": "Gateway Timeout",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "x-codegen-request-body-name": "body"
+      }
+    },
+    "/network/networkNumber/{networkNumber}/installedSerialNumber/swap": {
+      "post": {
+        "tags": [
+          "DeviceSwap"
+        ],
+        "summary": "Metodo atomico que executa a troca dos dados de um dispositivo de SIMCard  associado a uma linha por um novo SIM Card, na Rede(CAM) e no billing(Atlys).",
+        "operationId": "DeviceSwap",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "TokenJWT OAM - Bearer {token}.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "channelSystem",
+            "in": "header",
+            "description": "Enviar o valor do campo que representa o sistema/canal consumidor . Exemplo. 'MeuVivoEmpresas'",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "networkNumber",
+            "in": "path",
+            "description": "Numero da linha movel ( DDD + NumeroLinha ) Exemplo. '11912345678'",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SwapRequest"
+              }
+            }
+          },
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV2"
+                },
+                "example": {
+                  "code": "400",
+                  "message": "Bad Request."
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV2"
+                },
+                "example": {
+                  "code": "401",
+                  "message": "Unauthorized."
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Permission Denied",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV2"
+                },
+                "example": {
+                  "code": "403",
+                  "message": "Permission Denied."
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid parameter value",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV2"
+                },
+                "example": {
+                  "code": "422",
+                  "message": "Invalid parameter value."
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV2"
+                },
+                "example": {
+                  "code": "500",
+                  "message": "Internal Server Error",
+                  "errors": [
+                    {
+                      "domain": "Atlys - SwapICCIDV2",
+                      "reason": "500|01",
+                      "message": "Número de acesso inválido."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/network/networkNumber/{networkNumber}/unblockSubscription": {
+      "post": {
+        "tags": [
+          "UnblockSubscription"
+        ],
+        "summary": "Metodo responsavel em realizar a requisição de desbloqueio de assinatura no billing(Atlys) e na Rede (CAM).",
+        "operationId": "UnblockSubscription",
+        "parameters": [
+          {
+            "name": "networkNumber",
+            "in": "path",
+            "description": "Numero da linha movel ( DDD + NumeroLinha ) Exemplo. '11912345678'",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UnblockSubscriptionRequest"
+              }
+            }
+          },
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV2"
+                },
+                "example": {
+                  "code": "400",
+                  "message": "Bad Request."
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV2"
+                },
+                "example": {
+                  "code": "401",
+                  "message": "Unauthorized."
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Permission Denied",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV2"
+                },
+                "example": {
+                  "code": "403",
+                  "message": "Permission Denied."
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid parameter value",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV2"
+                },
+                "example": {
+                  "code": "422",
+                  "message": "Invalid parameter value."
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV2"
+                },
+                "example": {
+                  "code": "500",
+                  "message": "Internal Server Error",
+                  "errors": [
+                    {
+                      "domain": "Atlys - SearchCustAcctSbscrpByAttribute",
+                      "reason": "500|5113",
+                      "message": "Não foi encontrada nenhuma conta para os parâmetros informados.."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Empty": {
+        "type": "object"
+      },
+      "ErrorESIMManager": {
+        "title": "Error",
+        "type": "object",
+        "properties": {
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "error": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "detail": {
+            "type": "string"
+          }
+        }
+      },
+      "Error": {
+        "title": "Error",
+        "type": "object",
+        "properties": {
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "error": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "Service": {
+        "title": "Service",
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          },
+          "serviceCharacteristic": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ServiceCharacteristic"
+            }
+          },
+          "serviceOrderItem": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ServiceOrderItemList"
+            }
+          }
+        }
+      },
+      "ServiceCharacteristic": {
+        "title": "ServiceCharacteristic",
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "valueType": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          }
+        }
+      },
+      "ServiceOrderItem": {
+        "title": "ServiceOrderItem",
+        "type": "object",
+        "properties": {
+          "itemId": {
+            "type": "string"
+          },
+          "itemAction": {
+            "type": "string"
+          }
+        }
+      },
+      "ServiceOrderItemList": {
+        "title": "ServiceOrderItem",
+        "type": "object",
+        "properties": {
+          "itemId": {
+            "type": "string",
+            "example": "11999995555"
+          },
+          "itemAction": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string",
+            "example": "AdditionalMdn"
+          }
+        }
+      },
+      "ServiceRelationship": {
+        "title": "ServiceRelationship",
+        "type": "object",
+        "properties": {
+          "relationshipType": {
+            "type": "string"
+          },
+          "service": {
+            "$ref": "#/components/schemas/Service"
+          }
+        }
+      },
+      "ServiceRequest": {
+        "title": "ServiceRequest",
+        "type": "object",
+        "properties": {
+          "serviceType": {
+            "type": "string"
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "relatedEntity": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RelatedEntityRefOrValue"
+            }
+          },
+          "relatedParty": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RelatedParty"
+            }
+          },
+          "serviceOrderItem": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ServiceOrderItem"
+            }
+          },
+          "category": {
+            "type": "string"
+          },
+          "serviceCharacteristic": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ServiceCharacteristic"
+            }
+          },
+          "state": {
+            "type": "string"
+          },
+          "serviceRelationship": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ServiceRelationship"
+            }
+          },
+          "serviceSpecification": {
+            "$ref": "#/components/schemas/ServiceSpecification"
+          }
+        }
+      },
+      "ServiceSpecification": {
+        "title": "ServiceSpecification",
+        "required": [
+          "id"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        }
+      },
+      "RelatedEntityRefOrValue": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          }
+        }
+      },
+      "RelatedParty": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          }
+        }
+      },
+      "ServiceResponse": {
+        "title": "ServiceResponse",
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "source": {
+            "type": "string"
+          }
+        }
+      },
+      "ServiceCallbackRequest": {
+        "title": "ServiceCallbackRequest",
+        "type": "object",
+        "properties": {
+          "transactionId": {
+            "type": "string",
+            "description": "Id da transacao.",
+            "example": "a2J760000008xcpEAA"
+          },
+          "operationId": {
+            "$ref": "#/components/schemas/OperationId"
+          },
+          "source": {
+            "$ref": "#/components/schemas/Source"
+          },
+          "callbackCode": {
+            "type": "string",
+            "description": "Código de retorno do callback.",
+            "example": "SMTSIM_10001"
+          },
+          "returnList": {
+            "type": "array",
+            "description": "Lista de retornos dos elementos de callback.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "target": {
+                  "type": "string",
+                  "description": "Sistema de origem.",
+                  "example": "VIVOUDRSUB"
+                },
+                "returnCode": {
+                  "type": "string",
+                  "description": "Código de retorno/erro.",
+                  "example": "70248"
+                },
+                "returnMessage": {
+                  "type": "string",
+                  "description": "Mensagem de retorno/erro do callback.",
+                  "example": "Elemento de rede em falha"
+                }
+              }
+            }
+          }
+        }
+      },
+      "OperationId": {
+        "title": "OperationId",
+        "type": "string",
+        "description": "Tipo da operacao.",
+        "example": "Provisioning",
+        "enum": [
+          "Provisioning",
+          "CustomerCreation"
+        ]
+      },
+      "Source": {
+        "title": "Source",
+        "type": "string",
+        "description": "Sistema Origem.",
+        "example": "SmartSim"
+      },
+      "ServiceCallbackResponse": {
+        "title": "ServiceCallbackResponse",
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string"
+          }
+        }
+      },
+      "RegistryInterception": {
+        "type": "object",
+        "properties": {
+          "isServiceEnabled": {
+            "type": "boolean",
+            "description": "Indica se o serviço de interceptação deve estar ativo ou não."
+          }
+        },
+        "description": ""
+      },
+      "ServiceUpdateRequest": {
+        "type": "object",
+        "properties": {
+          "serviceType": {
+            "type": "string",
+            "description": "ENUM de tipos de servico, por exemplo interceptação.",
+            "enum": [
+              "INTERCEPTION"
+            ]
+          },
+          "category": {
+            "type": "string",
+            "description": "ENUM categoria de serviço, por exemplo pré-pago.",
+            "enum": [
+              "PREPAID"
+            ]
+          },
+          "description": {
+            "type": "string"
+          },
+          "state": {
+            "type": "string",
+            "description": "ENUM de estado",
+            "enum": [
+              "ACTIVE",
+              "INACTIVE"
+            ]
+          },
+          "suspensionTime": {
+            "type": "number",
+            "description": "Time to apply the suspension when adding a layer."
+          },
+          "serviceOrderItem": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ServiceOrderItemIdentification"
+            }
+          },
+          "relatedEntity": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RelatedEntityRefOrValue"
+            }
+          },
+          "user": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RelatedEntityRefOrValue"
+            }
+          }
+        }
+      },
+      "ServiceSuspensionRequest": {
+        "type": "object",
+        "properties": {
+          "serviceType": {
+            "type": "string",
+            "description": "ENUM de tipos de suspensão.",
+            "enum": [
+              "changeSuspension"
+            ]
+          },
+          "serviceOrderItem": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ServiceOrderItemIdentification"
+            }
+          }
+        }
+      },
+      "ServiceOrderItemIdentification": {
+        "type": "object",
+        "properties": {
+          "itemId": {
+            "type": "string"
+          },
+          "itemAction": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "valueType": {
+            "type": "string"
+          }
+        }
+      },
+      "ArrayOfServiceUpdateRequest": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/ServiceUpdateRequest"
+        }
+      },
+      "ArrayOfServiceSuspensionRequest": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/ServiceSuspensionRequest"
+        }
+      },
+      "GetService": {
+        "title": "Service",
+        "type": "object",
+        "properties": {
+          "externalId": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "lastUpdateDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "category": {
+            "type": "string"
+          },
+          "state": {
+            "type": "string"
+          },
+          "relatedParty": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RelatedParty"
+            }
+          },
+          "serviceCharacteristic": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ServiceCharacteristic"
+            }
+          },
+          "serviceRelationship": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ServiceRelationship"
+            }
+          }
+        }
+      },
+      "Product": {
+        "type": "object",
+        "properties": {
+          "notificationName": {
+            "type": "string",
+            "description": "Sistema Origem",
+            "example": "DEVICE MANAGER"
+          },
+          "msisdn": {
+            "type": "string",
+            "description": "MSISDN",
+            "example": 5511957711199
+          },
+          "imei": {
+            "type": "string",
+            "description": "IMEI",
+            "example": "350742137538941"
+          },
+          "imsi": {
+            "type": "string",
+            "description": "IMSI",
+            "example": "724101994970048"
+          }
+        },
+        "description": "Informações da linha que receberá a ativação"
+      },
+      "ESIMRequest": {
+        "type": "object",
+        "properties": {
+          "msisdn": {
+            "type": "string",
+            "description": "MSISDN",
+            "example": 5511957711199
+          },
+          "imei": {
+            "type": "string",
+            "description": "IMEI",
+            "example": "350742137538941"
+          },
+          "imsi": {
+            "type": "string",
+            "description": "IMSI",
+            "example": "724101994970048"
+          },
+          "iccid": {
+            "type": "string",
+            "description": "ICCID (Integrated Circuit Card Identifier) identificador unico do ESIM",
+            "example": "2682691216547738000"
+          },
+          "eid": {
+            "type": "string",
+            "description": "EID",
+            "example": 8.9049032000001e+31
+          },
+          "profileType": {
+            "type": "string",
+            "description": "profileType"
+          },
+          "matchingId": {
+            "type": "string",
+            "description": "matchingId",
+            "example": "A6JUOVTE13GTS4GM"
+          },
+          "confirmationCode": {
+            "type": "string",
+            "description": "A code used to authorise the usage of the MatchingID to confirm the download and installation of the Profile"
+          },
+          "releaseFlag": {
+            "type": "boolean",
+            "description": "If 'true', the Profile SHALL be immediately released for Profile download and installation."
+          },
+          "finalProfileStatusIndicator": {
+            "type": "string",
+            "description": "finalProfileStatusIndicator",
+            "example": "Available, Allocated, Confirmed or Unavailable"
+          }
+        },
+        "description": "Informações para ativação de ESIM"
+      },
+      "ESIMResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "status",
+            "example": "Executed-Success"
+          },
+          "eid": {
+            "type": "string",
+            "description": "eid",
+            "example": 8.9049032000001e+31
+          },
+          "matchingId": {
+            "type": "string",
+            "description": "matchingId",
+            "example": "A6JUOVTE13GTS4GM"
+          },
+          "smdpAddress": {
+            "type": "string",
+            "description": "smdpAddress",
+            "example": "vbr-livelab.prod.ondemandconnectivity.com"
+          },
+          "iccid": {
+            "type": "string",
+            "description": "iccid",
+            "example": "2682691216547738000"
+          }
+        },
+        "description": "Informações de retorno na ativação de ESIM"
+      },
+      "TransferESimRequest": {
+        "type": "object",
+        "properties": {
+          "telephoneNumber": {
+            "type": "string",
+            "description": "telephoneNumber",
+            "example": "71999569999"
+          },
+          "deviceType": {
+            "type": "string",
+            "description": "deviceType",
+            "example": "DEVICE_ES"
+          },
+          "iccid": {
+            "type": "string",
+            "description": "iccid",
+            "example": "2682691216547738000"
+          },
+          "imei": {
+            "type": "string",
+            "description": "imei",
+            "example": "357805023984942"
+          },
+          "eid": {
+            "type": "string",
+            "description": "eid",
+            "example": "987654321001974859"
+          }
+        },
+        "description": "Informações para criação de uma ordem de ativação de ESIM nos CRMs"
+      },
+      "TransferESimResponse": {
+        "type": "object",
+        "properties": {
+          "crmOrderId": {
+            "type": "string",
+            "description": "iccid",
+            "example": "3787908790"
+          }
+        },
+        "description": "Informações de retorno na criação de uma ordem de ativação de ESIM nos CRMs"
+      },
+      "ResponseNotification": {
+        "type": "object",
+        "properties": {
+          "result": {
+            "type": "string",
+            "description": "Codigo do Status HTTP",
+            "example": "OK ou 400, 401, 403, 404 ou 500"
+          },
+          "description": {
+            "type": "string",
+            "description": "Descrição do retorno",
+            "example": "Sucesso ou Ocorreu um erro inesperado durante chamada do serviço. Server Error / java.lang.Throwable: Tipo de simcard não permitido para ativação do 5G! MSISDN: 79996353022, CARD_TYPE: 4G, CARD_TYPE_CODE: 1"
+          },
+          "msisdn": {
+            "type": "string",
+            "description": "MSISDN",
+            "example": 5511957711199
+          }
+        },
+        "description": "Informações de retorno"
+      },
+      "SwapRequest": {
+        "title": "SwapRequest",
+        "type": "object",
+        "properties": {
+          "serviceOrder": {
+            "$ref": "#/components/schemas/ServiceOrderSwap"
+          }
+        }
+      },
+      "ServiceOrderSwap": {
+        "title": "ServiceOrderSwap",
+        "type": "object",
+        "properties": {
+          "hasExchangeRateCharging": {
+            "type": "string",
+            "description": "Indicador de cobrancaa Taxa de Troca. Valores válidos - 'Y' ou 'N'",
+            "example": "Y"
+          },
+          "isServiceEnabled": {
+            "type": "string",
+            "description": "Flag para indicar se os serviços de roaming internacional ou de chamada internacional              precisam ser bloqueados na assinatura. Valores válidos - 'Y' ou 'N' -'Y'  = Serviços serão Bloqueados - “N” = Serviços não serão Bloqueados",
+            "example": "Y"
+          },
+          "isSubsidized": {
+            "type": "string",
+            "description": "Flag para indicar se os serviços de roaming internacional ou de chamada internacional              precisam ser bloqueados na assinatura. Valores válidos - 'Y' ou 'N'",
+            "example": "Y"
+          },
+          "reasonCode": {
+            "type": "string",
+            "description": "Código que identifica a razão da troca. Valor de exemplo :  'TRNOR'",
+            "example": "TRNOR"
+          },
+          "startDateTime": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Data da solicitação da troca/swap."
+          },
+          "salesChannel": {
+            "$ref": "#/components/schemas/SalesChannel"
+          },
+          "equipment": {
+            "$ref": "#/components/schemas/Equipment"
+          },
+          "individual": {
+            "$ref": "#/components/schemas/Individual"
+          }
+        }
+      },
+      "SalesChannel": {
+        "title": "SalesChannel",
+        "type": "object",
+        "properties": {
+          "salesChannelName": {
+            "type": "string",
+            "description": "ID do Canal para o sistema Atlys. Exemplo. 'MeuVivoEmpresas'",
+            "example": "MeuVivoEmpresas"
+          }
+        }
+      },
+      "Equipment": {
+        "title": "Equipment",
+        "type": "object",
+        "properties": {
+          "installedSerialNumber": {
+            "type": "string",
+            "description": "Novo ICCID que será usado para realizar a troca/swap. Exemplo.'89551002139000106948'",
+            "example": "89551002139000106948"
+          }
+        }
+      },
+      "Individual": {
+        "title": "Individual",
+        "type": "object",
+        "properties": {
+          "documentNumber": {
+            "type": "string",
+            "description": "CPF ou CNPJ. CPF do gestor da conta ou o CNPJ do cliente consultado.",
+            "example": "12345678901"
+          }
+        }
+      },
+      "UnblockSubscriptionRequest": {
+        "title": "UnblockSubscriptionRequest",
+        "type": "object",
+        "properties": {
+          "serviceOrder": {
+            "$ref": "#/components/schemas/ServiceOrderUnblockSubscription"
+          }
+        }
+      },
+      "ServiceOrderUnblockSubscription": {
+        "title": "ServiceOrderUnblockSubscription",
+        "type": "object",
+        "properties": {
+          "startDateTime": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Campo que representa a Data e Hora da transação.  Exemplo de preenchimento :  '2023-08-30T20:31:23.112Z'    "
+          },
+          "reasonCode": {
+            "type": "string",
+            "description": "Código de motivo do bloqueio(hotline)",
+            "example": "PRE ACTIVATION"
+          }
+        }
+      },
+      "ErrorV2": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "Codigo Especifico do Erro"
+          },
+          "message": {
+            "type": "string",
+            "description": "descrição do erro"
+          },
+          "errors": {
+            "$ref": "#/components/schemas/Errors"
+          }
+        }
+      },
+      "Errors": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/ErrorsDetails"
+        }
+      },
+      "ErrorsDetails": {
+        "type": "object",
+        "properties": {
+          "domain": {
+            "type": "string",
+            "description": "dominio da entidade"
+          },
+          "reason": {
+            "type": "string",
+            "description": "motivo do erro"
+          },
+          "message": {
+            "type": "string",
+            "description": "detalhe do erro"
+          }
+        }
+      }
+    }
+  }
+}
